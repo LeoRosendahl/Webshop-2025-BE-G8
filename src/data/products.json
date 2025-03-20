@@ -25,5 +25,13 @@
         "stock": 75,
         "createdAt": "2025-01-03T00:00:00.000Z",
         "updatedAt": "2025-01-03T00:00:00.000Z"
-    }
+    }, {
+    "_id": "4",
+    "name": "Mango",
+    "price": 0.59,
+    "description": "The mango is the fruit of various citrus species in the family Rutaceae.",
+    "stock": 75,
+    "createdAt": "2025-01-03T00:00:00.000Z",
+    "updatedAt": "2025-01-03T00:00:00.000Z"
+}
 ]
