@@ -13,7 +13,7 @@ const __dirname = dirname(__filename);
 
 // Read products JSON file
 // const productsJSON = JSON.parse(
-  //readFileSync(join(__dirname, "../data/products.json"), "utf8")
+//readFileSync(join(__dirname, "../data/products.json"), "utf8")
 // );
 
 
@@ -28,8 +28,22 @@ router.get("/", async (req, res) => {
   }
 });
 
-//TODO Get single product
 
+//TODO Get single product
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    res.status(200).json(product);
+
+  } catch (error) {
+    res.status(404).json({ error: "Failed fetching product" })
+  }
+
+
+})
 // Create product (admin only). Until we've fixed adminAuth we'll commment this out and create a nonAdmin post.
 
 /* router.post("/", adminAuth, async (req, res) => {
