@@ -6,6 +6,12 @@ const productSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  category: {
+    type: String,
+    required: true,
+    enum: ["Fruits", "Meat", "Dairy", "Other"],
+    default: "Other"
+  },
   price: {
     type: Number,
     required: true,
