@@ -18,7 +18,7 @@ const __dirname = dirname(__filename);
 
 
 
-// Get all products
+// Get all products. Route is defined in routes, hence empty ("/").
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
@@ -30,8 +30,9 @@ router.get("/", async (req, res) => {
 
 //TODO Get single product
 
-// Create product (admin only)
-router.post("/", adminAuth, async (req, res) => {
+// Create product (admin only). Until we've fixed adminAuth we'll commment this out and create a nonAdmin post.
+
+/* router.post("/", adminAuth, async (req, res) => {
   try {
     const product = new Product(req.body);
     await product.save();
@@ -40,7 +41,17 @@ router.post("/", adminAuth, async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
+ */
+//Created post.   
+router.post("/", async (req, res) => {
+  try {
+    const product = new Product(req.body);
+    await product.save();
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 //TODO Update product (admin only)
 
 //TODO Delete product (admin only)
