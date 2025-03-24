@@ -69,5 +69,15 @@ router.post("/", async (req, res) => {
 //TODO Update product (admin only)
 
 //TODO Delete product (admin only)
-
+router.delete("/:id", async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id)
+    if (!product) {
+      throw new Error("Couldn't find product to delete");
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(404).json({ error: "Error deleting product"})
+  }
+})
 export default router;
