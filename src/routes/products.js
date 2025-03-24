@@ -12,18 +12,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Read products JSON file
-const productsJSON = JSON.parse(
-  readFileSync(join(__dirname, "../data/products.json"), "utf8")
-);
+// const productsJSON = JSON.parse(
+  //readFileSync(join(__dirname, "../data/products.json"), "utf8")
+// );
+
+
 
 // Get all products
-router.get("/", async (req, res) => {
+router.get("/api/products", async (req, res) => {
   try {
-    //! DONT USE IN PRODUCTION get products from json file
-    res.json(productsJSON);
-    return;
+    const products = await Product.find();
+    res.json(products);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Error fetching products" });
   }
 });
 
