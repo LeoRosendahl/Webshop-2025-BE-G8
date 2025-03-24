@@ -19,7 +19,7 @@ const __dirname = dirname(__filename);
 
 
 // Get all products
-router.get("/api/products", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
