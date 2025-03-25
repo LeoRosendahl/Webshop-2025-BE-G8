@@ -1,0 +1,8 @@
+API-Dokumentation:
+I routes mappen så har vi en fil som heter products.js, det är i den som vi skapar våra get, post, delete och put funktioner. Det är dessa funktioner som gör det möjligt att kunna lägga till, ta bort, uppdatera och hämta produkter som har lagrats på vår databas.
+GET / Denna funktion hämtar ALLA produkter i listan. 
+GET /:id Denna funktion hämtar produkter baserat på deras ID som existerar i atlas
+POST / Denna funktion skapar nya produkter, dock viktigt att de följer schemat som finns i models mappen, products.js filen Det är där vi sätter upp reglerna för hur en produkt ska se ut. 
+DELETE /:id Denna funktion raderar produkter baserat på ID:et som man lägger in. Detta är så att man inte råkar radera alla produkter.
+PUT /:id Denna funktion gör det möjligt att kunna uppdatera enskilda produkter baserat på deras ID.
+I postman använd denna URL: https://webshop-2025-be-g8.vercel.app/api/products
