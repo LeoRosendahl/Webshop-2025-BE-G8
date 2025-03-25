@@ -27,6 +27,18 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Error fetching products" });
   }
 });
+//här är en funktion för en update. req.body samlar värdet och {new: true} skriver sedan ut det nya värdet
+router.put("/:id", async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    if (!product) {
+      throw new Error("Couldn't find product to update");
+    }
+    res.status(200).json(Product);
+  } catch (error) {
+    res.status(404).json({ error: "Error updating product" })
+  }
+})
 
 
 //TODO Get single product
@@ -41,8 +53,6 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     res.status(404).json({ error: "Failed fetching product" })
   }
-
-
 })
 // Create product (admin only). Until we've fixed adminAuth we'll commment this out and create a nonAdmin post.
 
@@ -77,7 +87,7 @@ router.delete("/:id", async (req, res) => {
     }
     res.status(200).json(product);
   } catch (error) {
-    res.status(404).json({ error: "Error deleting product"})
+    res.status(404).json({ error: "Error deleting product" })
   }
 })
 export default router;
