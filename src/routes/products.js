@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Error fetching products" });
   }
 });
-//här är en funktion för en update. req.body samlar värdet och {new: true} skriver sedan ut det nya värdet
+//här är en funktion för en update(put). req.body samlar värdet och {new: true} skriver sedan ut det nya värdet.
 router.put("/:id", async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
@@ -85,7 +85,7 @@ router.delete("/:id", async (req, res) => {
     if (!product) {
       throw new Error("Couldn't find product to delete");
     }
-    res.status(200).json(product);
+    res.status(204).json(product);
   } catch (error) {
     res.status(404).json({ error: "Error deleting product" })
   }
