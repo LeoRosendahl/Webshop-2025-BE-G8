@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET || 'your-secret-key'
     );
-    
+
     res.status(201).json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -25,19 +25,25 @@ router.post('/register', async (req, res) => {
 });
 
 //TODO Login
-/*router.post('/login', async (req, res) => {
-  const {username, password} = req.body;
-  const user = await User.findOne({username});
-  if (!user){
-    return res.status(404).json({error: "User not found"});
-  }
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({user})
+  } catch (error){
+    console.error("Error signing in user", error);
+    res.status(500).json({error: "Internal server error"});
 
-  // jämför lösenord
-  const isMatch = await user.comparePassword(password);
-  if (!isMatch) {
-    return res.status(400).json({error: "Invalid credentials"});
   }
-})*/
+  // jämför lösenord
+ /* const isMatch = await User.comparePassword(password);
+  if (!isMatch) {
+    return res.status(400).json({ error: "Invalid credentials" });
+  } */
+})
 
 
 export default router;
