@@ -91,7 +91,7 @@ router.delete("/:id", async (req, res) => {
   }
 })
 
-router.delete("/", adminAuth, async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
     const result = await Product.deleteMany({});
     res.status(200).json({ message: `Deleted ${result.deletedCount} products` });
