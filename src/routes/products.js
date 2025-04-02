@@ -90,4 +90,14 @@ router.delete("/:id", async (req, res) => {
     res.status(404).json({ error: "Error deleting product" })
   }
 })
+
+router.delete("/", adminAuth, async (req, res) => {
+  try {
+    const result = await Product.deleteMany({});
+    res.status(200).json({ message: `Deleted ${result.deletedCount} products` });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting all products" });
+  }
+});
+
 export default router;
