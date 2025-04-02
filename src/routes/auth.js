@@ -25,19 +25,18 @@ router.post('/register', async (req, res) => {
 
 //TODO Login
 router.post('/login', async (req, res) => {
-  try {
-    const user = await User.findOne({ username: req.body.username });
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    res.json(user);
-  } catch (error) {
-    console.error("Error logging in user:", error);
-    res.status(500).json({ error: "Internal server error" });
+  const {username, password} = req.body;
+  const user = await User.findOne({username});
+  if (!user){
+    return res.status(404).json({error: "User not found"});
   }
-});
+
+  // jämför lösenord
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    return res.status(400).json({error: "Invalid credentials"});
+  }
+})
 
 module.exports = router;
 
