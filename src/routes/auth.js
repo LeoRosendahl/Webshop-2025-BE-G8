@@ -25,20 +25,21 @@ router.post('/register', async (req, res) => {
 
 //TODO Login
 router.post('/login', async (req, res) => {
-  const user = await user.findOne({username: req.body.username})
-  if (!user) {
-    return res.status(404).send('User not found')
-  }
-  
   try {
-    if (userSchema.methods.comparePassword = async function (candidatePassword) {
-      return bcrypt.compare(candidatePassword, this.password);
-    }) {
+    const user = await User.findOne({ username: req.body.username });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-    res.send('Success')
-  } catch {
-    res.send('Not Allowed')
+
+    res.json(user);
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-})
+});
+
+module.exports = router;
+
 
 export default router;
