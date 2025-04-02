@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
 });
 
 //TODO Login
-router.post('/login', async (req, res) => {
+/*router.post('/login', async (req, res) => {
   const {username, password} = req.body;
   const user = await User.findOne({username});
   if (!user){
@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
   if (!isMatch) {
     return res.status(400).json({error: "Invalid credentials"});
   }
-})
+})*/
 
 
 module.exports = router;
