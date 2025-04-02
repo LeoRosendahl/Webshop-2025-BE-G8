@@ -14,7 +14,8 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
+     /* { id: user._id, isAdmin: user.isAdmin }, */
+     { id: user._id, isAdmin: true},
       process.env.JWT_SECRET || 'your-secret-key'
     );
 
@@ -32,17 +33,17 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.json({user})
-  } catch (error){
+    res.json({ user })
+  } catch (error) {
     console.error("Error signing in user", error);
-    res.status(500).json({error: "Internal server error"});
+    res.status(500).json({ error: "Internal server error" });
 
   }
   // jämför lösenord
- /* const isMatch = await User.comparePassword(password);
-  if (!isMatch) {
-    return res.status(400).json({ error: "Invalid credentials" });
-  } */
+  /* const isMatch = await User.comparePassword(password);
+   if (!isMatch) {
+     return res.status(400).json({ error: "Invalid credentials" });
+   } */
 })
 
 
