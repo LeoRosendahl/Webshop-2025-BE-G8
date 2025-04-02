@@ -1,14 +1,14 @@
 import express, { application } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import bcrypt from 'bcryptjs/dist/bcrypt.js';
+import bcrypt from 'bcryptjs';
 
 
 
 const router = express.Router();
 
 // Register
-router.post('/register', async (req, res) => {
+/*router.post('/register', async (req, res) => {
   try {
     const user = new User(req.body);
     await user.save();
@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-});
+}); */
 
 //TODO Login
 /*router.post('/login', async (req, res) => {
@@ -39,7 +39,5 @@ router.post('/register', async (req, res) => {
   }
 })*/
 
-
-module.exports = router;
 
 export default router;
