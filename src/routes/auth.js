@@ -10,12 +10,13 @@ const router = express.Router();
 // Register
 router.post('/register', async (req, res) => {
   try {
-    const user = new User(req.body);
-    await user.save();
+    let adminStatus = true;
+    const User = { username, password, isAdmin: adminStatus } = req.body;
+    await User.save();
 
     const token = jwt.sign(
-     /* { id: user._id, isAdmin: user.isAdmin }, */
-     { id: user._id, isAdmin: true},
+      /* { id: user._id, isAdmin: user.isAdmin }, */
+      { id: user._id, isAdmin: true },
       process.env.JWT_SECRET || 'your-secret-key'
     );
 
