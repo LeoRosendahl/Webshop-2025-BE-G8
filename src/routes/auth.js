@@ -10,10 +10,13 @@ const router = express.Router();
 // Register
 router.post('/register', async (req, res) => {
   try {
-    let adminStatus = true;
-    const User = { username, password, isAdmin: adminStatus } = req.body;
-    await User.save();
 
+    let user = { username, password } = req.body;
+    let adminStatus = true;
+
+    const newUser = new User({ username, password, isAdmin: adminStatus });
+    await newUser.save();
+    
     const token = jwt.sign(
       /* { id: user._id, isAdmin: user.isAdmin }, */
       { id: user._id, isAdmin: true },
