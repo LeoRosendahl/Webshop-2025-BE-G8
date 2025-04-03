@@ -8,22 +8,25 @@ import bcrypt from 'bcryptjs';
 const router = express.Router();
 
 // Register
+// Register
 router.post('/register', async (req, res) => {
   try {
-
-    let user = { username, password } = req.body;
+    const { username, password } = req.body;
+    
+    // Gör denna användare till admin
     let adminStatus = true;
 
+    // Skapa ny användare med isAdmin = true
     const newUser = new User({ username, password, isAdmin: adminStatus });
     await newUser.save();
     
+    // Skapa JWT-token
     const token = jwt.sign(
-      /* { id: user._id, isAdmin: user.isAdmin }, */
-      { id: user._id, isAdmin: true },
+      { id: newUser._id, isAdmin: newUser.isAdmin },
       process.env.JWT_SECRET || 'your-secret-key'
     );
 
-    res.status(201).json({ user, token });
+    res.status(201).json({ user: newUser, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
