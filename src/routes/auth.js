@@ -14,10 +14,10 @@ router.post('/register', async (req, res) => {
     const { username, password } = req.body;
     
     // Gör denna användare till admin
-    let adminStatus = true;
+    /* let adminStatus = false; */
 
-    // Skapa ny användare med isAdmin = true
-    const newUser = new User({ username, password, isAdmin: adminStatus });
+    // Skapa ny användare med isAdmin = true. om vi vill skapa en till admin användare, sätt adminStatus: true i newUser (efter password)
+    const newUser = new User({ username, password });
     await newUser.save();
     
     // Skapa JWT-token
