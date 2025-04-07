@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
   //sätter req på false atm. bör fungera sedan när fend vill skicka upp.
   imageUrl: {
     type: String,
-    required: false
+    required: true
   }
 }, {
   timestamps: true
