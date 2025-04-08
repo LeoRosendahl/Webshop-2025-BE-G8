@@ -1,6 +1,5 @@
 import express from "express";
-import Product from "../models/Product.js";
-import Category from "..models/Product.js";
+import { Product, Category } from "../models/Product.js";
 import { adminAuth } from "../middleware/auth.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";

@@ -5,7 +5,6 @@ const categorySchema = new mongoose.Schema({
     required: true
   }
 })
-module.exports = mongoose.model('category', categorySchema);
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -41,4 +40,7 @@ const productSchema = new mongoose.Schema({
   timestamps: true
 });
 
-export default mongoose.model('Product', productSchema);
+const Product = mongoose.model('Product', productSchema);
+const Category = mongoose.model('category', categorySchema);
+
+export default { Product, Category }; 
