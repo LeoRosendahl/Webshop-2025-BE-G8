@@ -1,5 +1,5 @@
 import express from "express";
-import Product from "../models/Product.js";
+import { Product, Category } from "../models/Product.js";
 import { adminAuth } from "../middleware/auth.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
@@ -69,7 +69,22 @@ router.get("/:id", async (req, res) => {
 //Created post.   
 router.post("/", async (req, res) => {
   try {
-    const product = new Product(req.body);
+    // Test for categorySchema and its functionality -------
+    const body = req.body
+
+    // Checking if a category already exists in schema
+    let categoryName = await Category.findOne({name: body.category})
+
+    if (!categoryName) {
+      categoryName = await Category.create({name: body.category})
+    }
+
+    //making string to objectID
+    body.category = categoryName._id;
+    // End of test for categorySchema ---------
+
+
+    const product = new Product(body);
     await product.save();
     res.status(201).json(product);
   } catch (error) {

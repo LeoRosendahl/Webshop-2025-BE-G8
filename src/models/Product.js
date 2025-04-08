@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
-
+const categorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  }
+})
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -7,9 +12,9 @@ const productSchema = new mongoose.Schema({
     trim: true
   },
   category: {
-    type: String,
-    required: true,
-    enum: ["Frukt", "Kött", "Mejeri", "Övrigt"],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'category',
+    required: true
   },
   price: {
     type: Number,
@@ -35,4 +40,7 @@ const productSchema = new mongoose.Schema({
   timestamps: true
 });
 
-export default mongoose.model('Product', productSchema);
+const Product = mongoose.model('Product', productSchema);
+const Category = mongoose.model('category', categorySchema);
+
+export { Product, Category }; 
