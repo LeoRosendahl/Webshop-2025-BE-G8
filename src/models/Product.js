@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema({
     min: 0,
     required: true
   },
-  //sätter req på false atm. bör fungera sedan när fend vill skicka upp.
+  //ändrat nu till true. alla typer av images bör fungera att ladda upp.
   imageUrl: {
     type: String,
     required: true
