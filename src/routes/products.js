@@ -69,7 +69,7 @@ router.get("/:id", async (req, res) => {
 //Created post.   
 router.post("/", async (req, res) => {
   try {
-    // Test for categorySchema and its functionality
+    // Test for categorySchema and its functionality -------
     const body = req.body
 
     // Checking if a category already exists in schema
@@ -81,7 +81,7 @@ router.post("/", async (req, res) => {
 
     //making string to objectID
     body.category = categoryName._id;
-    // End of test for categorySchema
+    // End of test for categorySchema ---------
 
 
     const product = new Product(body);

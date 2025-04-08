@@ -43,4 +43,4 @@ const productSchema = new mongoose.Schema({
 const Product = mongoose.model('Product', productSchema);
 const Category = mongoose.model('category', categorySchema);
 
-export default { Product, Category }; 
+export { Product, Category }; 
