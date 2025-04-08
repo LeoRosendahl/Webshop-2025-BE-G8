@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
     // End of test for categorySchema
 
 
-    const product = new Product(req.body);
+    const product = new Product(body);
     await product.save();
     res.status(201).json(product);
   } catch (error) {
