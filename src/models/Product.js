@@ -1,5 +1,11 @@
 import mongoose from 'mongoose';
-
+const categorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  }
+})
+module.exports = mongoose.model('category', categorySchema);
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -7,9 +13,9 @@ const productSchema = new mongoose.Schema({
     trim: true
   },
   category: {
-    type: String,
-    required: true,
-    enum: ["Frukt", "Kött", "Mejeri", "Övrigt"],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'category',
+    required: true
   },
   price: {
     type: Number,
