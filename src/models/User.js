@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
     trim: true
   },
   streetAddress:{
-    type: String
+    type: String,
+    trim: true
   },
   postalCode:{
     type: String,
