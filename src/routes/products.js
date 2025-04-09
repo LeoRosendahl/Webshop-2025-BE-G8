@@ -21,7 +21,9 @@ const __dirname = dirname(__filename);
 // Get all products. Route is defined in routes, hence empty ("/").
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find();
+    // Listar ut alla produkter och hämtar ut category name istället för objectID
+    const products = await Product.find().populate("category", "name"); // populera endast "name" från category
+    res.json(products);
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: "Error fetching products" });
