@@ -31,7 +31,20 @@ router.get("/", async (req, res) => {
 //här är en funktion för en update(put). req.body samlar värdet och {new: true} skriver sedan ut det nya värdet.
 router.put("/:id", async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true })
+
+    const body = req.body
+    // Kolla om kategorier med detta namn redan finns
+    if (body.category) {
+      let categoryName = await Category.findOne({name: body.category})
+
+      if (!categoryName) {
+        categoryName = await Category.create({ name: body.category})
+      }
+
+      body.category = categoryName._id;
+    };
+
+    const product = await Product.findByIdAndUpdate(req.params.id, body, { new: true })
     if (!product) {
       throw new Error("Couldn't find product to update");
     }
@@ -39,13 +52,13 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     res.status(404).json({ error: "Error updating product" })
   }
-})
+});
 
 
 //TODO Get single product
 router.get("/:id", async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id).populate("category", "name");
     if (!product) {
       throw new Error("Product not found");
     }
