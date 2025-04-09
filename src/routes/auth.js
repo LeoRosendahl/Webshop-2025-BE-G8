@@ -49,7 +49,10 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     const accessToken = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
+      { id: user._id, isAdmin: 
+        user.isAdmin,
+        username: user.username
+       },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '15m' }
     );
