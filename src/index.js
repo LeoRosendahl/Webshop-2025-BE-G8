@@ -43,7 +43,8 @@ app.get('/api', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/minasidor',authMinaSidorRoutes)
-
+//Test av categories route
+app.use('/api/products/categories', productRoutes)
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hakim-livs-test/')
   .then(() => console.log('Connected to MongoDB', process.env.MONGODB_URI))

@@ -151,7 +151,7 @@ router.post("/categories",async (req,res) => {
 
 // GET för att hämta categories
 router.get("/categories", async ( req, res) => {
-  try {
+  try { 
     const categories = await Category.find();
     res.status(200).json(categories);
   } catch (error) {
