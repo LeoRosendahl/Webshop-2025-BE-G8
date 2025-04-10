@@ -3,6 +3,8 @@ import { auth } from "../middleware/auth";
 import express from "express";
 import Product from "../models/Product.js";
 import { adminAuth } from "../middleware/auth.js";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
