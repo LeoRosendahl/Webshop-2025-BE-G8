@@ -14,14 +14,14 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     // Gör denna användare till admin
     /* let adminStatus = false; */
-    
+
     // Skapa ny användare med isAdmin = true. om vi vill skapa en till admin användare, sätt adminStatus: true i newUser (efter password)
     const newUser = new User({ username, password });
     await newUser.save();
-    
+
     const accessToken = jwt.sign(
       { id: newUser._id, isAdmin: newUser.isAdmin },
       process.env.JWT_SECRET || 'your-secret-key',
@@ -39,6 +39,9 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.post('/minasidor', async(req, res => {
+
+}))
 
 //TODO Login
 router.post('/login', async (req, res) => {
@@ -49,10 +52,11 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     const accessToken = jwt.sign(
-      { id: user._id, isAdmin: 
-        user.isAdmin,
+      {
+        id: user._id, isAdmin:
+          user.isAdmin,
         username: user.username
-       },
+      },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '15m' }
     );
@@ -62,7 +66,7 @@ router.post('/login', async (req, res) => {
       process.env.REFRESH_SECRET || 'your-refresh-secret',
       { expiresIn: '7d' }
     )
-    res.json({ user, refreshToken, accessToken})
+    res.json({ user, refreshToken, accessToken })
 
   } catch (error) {
     console.error("Error signing in user", error);
@@ -74,21 +78,21 @@ router.post('/login', async (req, res) => {
     try {
       const { refreshToken } = req.body
       if (!refreshToken) {
-        return res.status(400).json({error: "Refresh token is required"})
+        return res.status(400).json({ error: "Refresh token is required" })
       }
-      
+
       jwt.verify(refreshToken, process.env.REFRESH_SECRET, async (error, decoded) => {
         if (error) {
           return res.status(403).json({ error: "Invalid refresh token" });
         }
-  
+
         // Om refresh token är giltig, skapa ett nytt access token
         const accessToken = jwt.sign(
           { id: decoded.id, isAdmin: decoded.isAdmin },
           process.env.JWT_SECRET || 'your-access-secret', // Se till att använda rätt JWT_SECRET här
           { expiresIn: '15m' }
         );
-  
+
         res.json({ accessToken });
       });
     } catch (error) {
