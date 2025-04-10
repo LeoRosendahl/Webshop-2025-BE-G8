@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import productRoutes from './routes/products.js';
-
+import authMinaSidorRoutes from './routes/minasidor.js';
 dotenv.config();
 
 const app = express();
@@ -42,6 +42,7 @@ app.get('/api', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/minasidor',authMinaSidorRoutes)
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/hakim-livs-test/')

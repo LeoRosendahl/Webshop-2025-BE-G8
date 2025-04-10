@@ -15,7 +15,7 @@ router.post('/minasidor', async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" })
         }
-        user.firstName = firstName,
+            user.firstName = firstName,
             user.lastName = lastName,
             user.email = email,
             user.streetAddress = streetAddress,
@@ -47,3 +47,5 @@ router.put('/minasidor', async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+export default router;
