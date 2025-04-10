@@ -129,4 +129,24 @@ router.delete("/", async (req, res) => {
   }
 });
 
+// ------ CategorySchema functions for frontend POST,GET,PUT,DELETE-------
+//         LÄGG TILL ADMINAUTH!!!!
+router.post("/categories",async (req,res) => {
+  try {
+    const {name} = req.body;
+
+    let category = await Category.findOne({name});
+
+    //tittar om det redan finns i databasen (error code 409 betyder att datan redan finns i databasen)
+    if (!category){
+      category = await Category.create({ name });
+      res.status(201).json(category);
+    } else {
+      res.status(409).json({ error: "Category already exists" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message})
+  }
+})
+
 export default router;
