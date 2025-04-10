@@ -12,8 +12,8 @@ router.get('/', auth, async (req, res) => {
         return res.json({ user })
 
     } catch (error) {
-        console.error("Error adding user info");
-        res.status(500).json({ error: "Internal server error" });
+        console.error("Error retrieving user info");
+        res.status(500).json({ error: "Error occured while fetching user data" });
     }
 })
 router.delete('/:id', auth, async (req, res) => {
