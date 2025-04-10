@@ -39,9 +39,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/minasidor', async(req, res => {
-
-}))
 
 //TODO Login
 router.post('/login', async (req, res) => {

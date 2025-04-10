@@ -7,7 +7,7 @@ import { adminAuth } from "../middleware/auth.js";
 const router = express.Router();
 
 //funktion för att kunna lägga till innehåll mina sidor
-router.post('/minasidor', async (req, res) => {
+router.post('/minasidor', async(req, res) => {
     try {
         const { username, firstName, lastName, email, streetAddress, postalCode } = req.body
 
