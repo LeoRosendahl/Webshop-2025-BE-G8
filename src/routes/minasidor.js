@@ -5,7 +5,7 @@ import express from "express";
 const router = express.Router();
 
 //funktion för att kunna lägga till innehåll mina sidor
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const id = req.user.id
         const user = await User.findById(id).select("-password")
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 })
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id)
         if (!user) {
@@ -29,7 +29,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 //funktion för att kunna ändra mina sidor.
-router.put('/', async (req, res) => {
+router.put('/', auth, async (req, res) => {
     try {
         const id = req.user.id
         //istället för att deconstructa allting igen
