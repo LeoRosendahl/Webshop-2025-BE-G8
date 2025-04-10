@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 import { auth } from "../middleware/auth";
 import express from "express";
 import Product from "../models/Product.js";
@@ -15,11 +15,11 @@ router.post('/minasidor', async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User not found" })
         }
-            user.firstName = firstName,
-            user.lastName = lastName,
-            user.email = email,
-            user.streetAddress = streetAddress,
-            user.postalCode = postalCode,
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.email = email;
+            user.streetAddress = streetAddress;
+            user.postalCode = postalCode;
             await user.save();
         res.status(200).json({ message: "User info added successfully" });
     } catch (error) {
@@ -31,19 +31,22 @@ router.post('/minasidor', async (req, res) => {
 //funktion för att kunna ändra mina sidor.
 router.put('/minasidor', async (req, res) => {
     try {
+        //istället för att deconstructa allting igen
+        const { username, ...updateData } = req.body;
+
         const user = await User.findOneAndUpdate(
-            { username: req.params.username },
-            req.body,
-            { new: true }
+          { username },
+          updateData,
+          { new: true }
         );
 
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
 
-        res.status(200).json({ message: "User info updated", user });
+        res.status(200).json({ message: "User info updated" });
     } catch (error) {
-        console.error("Error updating user info", error);
+        console.error("Error updating user info" );
         res.status(500).json({ error: "Internal server error" });
     }
 });
