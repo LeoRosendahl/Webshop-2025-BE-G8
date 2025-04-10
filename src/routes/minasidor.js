@@ -1,29 +1,16 @@
 import User from "../models/User.js";
-import { auth } from "../middleware/auth";
+import { auth } from "../middleware/auth.js";
 import express from "express";
-import Product from "../models/Product.js";
-import { adminAuth } from "../middleware/auth.js";
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
 //funktion för att kunna lägga till innehåll mina sidor
-router.post('/minasidor', auth, async(req, res) => {
+router.get('/', auth, async(req, res) => {
     try {
-        const { username, firstName, lastName, email, streetAddress, postalCode } = req.body
+        const id = req.user.id
+        const user = await User.findById(id).select("-password")
+        return res.json({user})
 
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.status(404).json({ error: "User not found" })
-        }
-            user.firstName = firstName;
-            user.lastName = lastName;
-            user.email = email;
-            user.streetAddress = streetAddress;
-            user.postalCode = postalCode;
-            await user.save();
-        res.status(200).json({ message: "User info added successfully" });
     } catch (error) {
         console.error("Error adding user info");
         res.status(500).json({ error: "Internal server error" });
@@ -31,22 +18,27 @@ router.post('/minasidor', auth, async(req, res) => {
 })
 
 //funktion för att kunna ändra mina sidor.
-router.put('/minasidor', auth, async (req, res) => {
+router.put('/', auth, async (req, res) => {
     try {
+        const id = req.user.id
         //istället för att deconstructa allting igen
-        const { username, ...updateData } = req.body;
+        const updateData = req.body;
+        delete updateData._id
+        delete updateData.password
 
         const user = await User.findOneAndUpdate(
-          { username },
-          updateData,
+          { _id: id },
+          {
+            $set: updateData
+          },
           { new: true }
-        );
+        ).select("-password");
 
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
 
-        res.status(200).json({ message: "User info updated" });
+        res.status(200).json({ message: "User info updated", user });
     } catch (error) {
         console.error("Error updating user info" );
         res.status(500).json({ error: "Internal server error" });
