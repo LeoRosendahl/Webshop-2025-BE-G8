@@ -25,7 +25,8 @@ app.get('/api', (req, res) => {
         "POST /api/auth/register": "Register a new user",
         "POST /api/auth/login": "Login with username and password",
         "GET /api/auth/minasidor": "Get user info",
-        "PUT /api/auth/minasidor": "Update user info"
+        "PUT /api/auth/minasidor": "Update user info",
+        "DELETE /api/auth/minasidor/:id": "Delete user permanently"
       },
       products: {
         "GET /api/products": "Get all products",
