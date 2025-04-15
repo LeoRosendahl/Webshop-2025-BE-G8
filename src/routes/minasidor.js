@@ -16,7 +16,7 @@ router.get('/', auth, async (req, res) => {
         res.status(500).json({ error: "Error occured while fetching user data" });
     }
 })
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const id = req.user.id;
         const user = await User.findByIdAndDelete(id);
