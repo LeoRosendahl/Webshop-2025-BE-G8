@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
 
   }
-
+});
   router.post('/refresh', (req, res) => {
     try {
       const { refreshToken } = req.body
@@ -104,5 +104,4 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-});
 export default router;
