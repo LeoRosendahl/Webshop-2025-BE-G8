@@ -5,31 +5,35 @@ import express from "express";
 const router = express.Router();
 
 //funktion för att kunna lägga till innehåll mina sidor
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const id = req.user.id
         const user = await User.findById(id).select("-password")
         return res.json({ user })
 
     } catch (error) {
-        console.error("Error adding user info");
-        res.status(500).json({ error: "Internal server error" });
+        console.error("Error retrieving user info");
+        res.status(500).json({ error: "Error occured while fetching user data" });
     }
 })
-router.delete('/:id', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
+        const id = req.user.id; // Kommer från auth middleware
+        const user = await User.findByIdAndDelete(id);
+
         if (!user) {
-            return res.status(404).json({ error: "User not found" })
+            return res.status(404).json({ error: "User not found" });
         }
-        res.status(200).json({ message: `User with ID ${req.params.id} deleted successfully` });
+
+        res.status(200).json({ message: `User with ID ${id} deleted successfully` });
     } catch (error) {
-        res.status(500).json({ error: "Failed to delete user" })
+        console.error("Failed to delete user:");
+        res.status(500).json("Failed to delete user");
     }
-})
+});
 
 //funktion för att kunna ändra mina sidor.
-router.put('/', async (req, res) => {
+router.put('/', auth, async (req, res) => {
     try {
         const id = req.user.id
         //istället för att deconstructa allting igen
