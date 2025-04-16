@@ -48,6 +48,13 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    // jämför lösenord
+   const isMatch = await user.comparePassword(password);
+   if (!isMatch) {
+     return res.status(400).json({ error: "Invalid credentials" });
+   }
+  
     const accessToken = jwt.sign(
       {
         id: user._id, isAdmin:
@@ -70,7 +77,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
 
   }
-
+});
   router.post('/refresh', (req, res) => {
     try {
       const { refreshToken } = req.body
@@ -97,12 +104,4 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  // jämför lösenord
-  /* const isMatch = await User.comparePassword(password);
-   if (!isMatch) {
-     return res.status(400).json({ error: "Invalid credentials" });
-   } */
-})
-
-
 export default router;
